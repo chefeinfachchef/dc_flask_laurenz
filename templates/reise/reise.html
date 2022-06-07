@@ -1,0 +1,69 @@
+{%extends 'base.html'%}
+
+{%block body%}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Kosten</th>
+      <th scope="col">Zielort</th>
+      <th scope="col">Land</th>
+      <th scope="col">Dauer</th>
+      <th scope="col">Hotel</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for reise in reisen.items %}
+    <tr>
+      <td>{{reise.Kosten}}</td>
+      <td>{{reise.Zielort}}</td>
+      <td>{{reise.Land}}</td>
+      <td>{{reise.Dauer}}</td>
+      <td>{{reise.Hotel}}</td>
+      <td>
+        <a class="btn btn-success" href="/reise/edit?ReiseId={{reise.ReiseId}}">✏️</a>
+        <form action="/reise/delete" method="post" style="display: inline;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="ReiseId" id="ReiseId" value="{{reise.ReiseId}}">
+          <button class="btn btn-danger" onclick="reise_delete(this); return false;">🗑️</button>
+
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+<div id="data-navigation">
+  <a href="{{ url_for('reise_blueprint.reise', page=1) }}"
+     class="btn btn-outline-primary btn-sm
+           {% if reisen.page == 1 %}disabled{% endif %}">
+    &laquo;&laquo;
+  </a>
+  <a href="{{ url_for('reise_blueprint.reise', page=reisen.prev_num) }}"
+     class="btn btn-outline-primary btn-sm
+           {% if reisen.page == 1 %}disabled{% endif %}">
+    &laquo;
+  </a>
+  <a class="btn btn-primary btn-sm">
+    {{ reisen.page }}
+  </a>
+
+  <a href="{{ url_for('reise_blueprint.reise', page=reisen.next_num) }}"
+     class="btn btn-outline-primary btn-sm
+           {% if reisen.page == reisen.pages or reisen.pages == 0 %}disabled{% endif %}">
+    &raquo;
+  </a>
+  <a href="{{ url_for('reise_blueprint.reise', page=reisen.pages) }}"
+     class="btn btn-outline-primary btn-sm
+           {% if reisen.page == reisen.pages or reisen.pages == 0%}disabled{% endif %}">
+    &raquo;&raquo;
+  </a>
+</div>
+
+
+
+{%endblock%}
