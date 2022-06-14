@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.secret_key = "VerySecretSecretKey"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:root@localhost:8000/Reise"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:root@localhost/Reise"
 
 csrf = CSRFProtect(app)
 
